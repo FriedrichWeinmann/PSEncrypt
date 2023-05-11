@@ -32,6 +32,7 @@
 
 		Registers the latest certificate with the subject "CN=fred@contoso.com" as certificate to use to encrypt.
 	#>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true, ParameterSetName = 'Thumbprint')]

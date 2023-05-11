@@ -45,6 +45,7 @@
 	Only the intended recipient "fred@contoso.com" should have the certificate to decrypt this document.
 	The recipient can also verify, that the file was originally protected by the current user.
 	#>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingWriteHost", "")]
 	[CmdletBinding(DefaultParameterSetName = 'File')]
 	Param (
 		[Parameter(Mandatory = $true)]

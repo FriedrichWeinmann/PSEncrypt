@@ -28,7 +28,7 @@
 	)
 	
 	process {
-		Get-ChildItem -Path $script:certFolder | Where-Object Name -Match '^[0-9A-F]{40}\.clixml$' | Import-Clixml | Where-Object Name -Like $Name | % {
+		Get-ChildItem -Path $script:certFolder | Where-Object Name -Match '^[0-9A-F]{40}\.clixml$' | Import-Clixml | Where-Object Name -Like $Name | ForEach-Object {
 			$_.PSObject.TypeNames.Insert(0, 'PSEncrypt.Contact')
 			$_
 		}

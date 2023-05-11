@@ -29,6 +29,8 @@
 
 	Creates an error record with full metadata.
 	#>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
+	[OutputType([System.Management.Automation.ErrorRecord])]
 	[CmdletBinding()]
 	param (
 		[string]

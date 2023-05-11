@@ -1,5 +1,5 @@
 ﻿# Folder where config items are persisted. Notably destination certificates.
-$script:configFolder = Join-PSFPath (Get-PSFPath -Name AppData) PowerShell PSEncrypt
+$script:configFolder = Join-Path $env:APPDATA "PowerShell\PSEncrypt"
 $script:certFolder = Join-Path $script:configFolder 'certs'
 
 if (-not (Test-Path $script:certFolder)) {

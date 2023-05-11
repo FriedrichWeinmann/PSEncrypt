@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+	<Type>
+		<Name>PSEncrypt.Contact</Name>
+		<Members>
+			<ScriptProperty>
+				<Name>IsValid</Name>
+				<GetScriptBlock>
+$this.Certificate.Verify()
+				</GetScriptBlock>
+			</ScriptProperty>
+		</Members>
+	</Type>
+
+		<Type>
+		<Name>PSEncrypt.Certificate</Name>
+		<Members>
+			<ScriptProperty>
+				<Name>IsValid</Name>
+				<GetScriptBlock>
+$this.Certificate.Verify()
+				</GetScriptBlock>
+			</ScriptProperty>
+		</Members>
+	</Type>
+</Types>

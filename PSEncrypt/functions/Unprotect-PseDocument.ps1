@@ -30,6 +30,7 @@
 
 		Decrypts "report.xlsx.json" in the same path under the original filename (probably "report.xlsx")
 	#>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingWriteHost", "")]
 	[CmdletBinding()]
 	Param (
 		[Parameter(Mandatory = $true, ParameterSetName = 'File', ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
@@ -121,10 +122,12 @@
 
 				$exportPath = Join-Path -Path $OutPath -ChildPath $config.Name
 				$content | Set-Content -Path $exportPath -Encoding UTF8
+				Write-Host "Unporotected file written to: $exportPath"
 			}
 			else {
 				$exportPath = Join-Path -Path $OutPath -ChildPath $config.Name
 				[System.IO.File]::WriteAllBytes($exportPath, $decryptedBytes)
+				Write-Host "Unporotected file written to: $exportPath"
 			}
 		}
 	}

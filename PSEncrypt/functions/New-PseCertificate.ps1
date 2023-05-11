@@ -19,6 +19,7 @@
 	
 	Creates a new certificate to use as your own PSEncrypt certificate, using your Teams account name as name
 	#>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
 	[CmdletBinding()]
 	param (
 		[string]

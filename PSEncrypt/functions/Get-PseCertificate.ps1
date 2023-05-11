@@ -27,7 +27,13 @@
 	)
 
 	process {
-		$certificates = Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object FriendlyName -EQ 'PSEncrypt Certificate' | ForEach-Object {
+		$filter = {
+			if ($script:config.CertThumbprint -and $_.ThumbPrint -eq $script:config.CertThumbprint) { return $true }
+			if ($script:config.CertSubject -and $_.Subject -eq $script:config.CertSubject) { return $true }
+			if ($script:config.CertFriendlyName -and $_.FriendlyName -eq $script:config.CertFriendlyName) { return $true }
+		}
+
+		$certificates = Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object $filter | ForEach-Object {
 			[PSCustomObject]@{
 				PSTypeName  = 'PSEncrypt.Certificate'
 				Subject     = $_.Subject

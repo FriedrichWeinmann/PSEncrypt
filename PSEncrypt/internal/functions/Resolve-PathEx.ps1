@@ -46,6 +46,9 @@
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+		[AllowEmptyCollection()]
+		[AllowEmptyString()]
+		[AllowNull()]
 		[Alias('FullName')]
 		[string[]]
 		$Path,
@@ -66,6 +69,7 @@
 	)
 
 	process {
+		if (-not $Path) { return }
 		foreach ($pathEntry in $Path) {
 			$data = [PSCustomObject]@{
 				Input   = $pathEntry

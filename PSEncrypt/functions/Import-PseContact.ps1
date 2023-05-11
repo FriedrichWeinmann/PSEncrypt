@@ -84,7 +84,7 @@
 
 			$certData = [PSCustomObject]@{
 				PSTypeName  = 'PSEncrypt.Contact'
-				Name        = $Name
+				Name        = $jsonContent.Name
 				Thumbprint  = $certificate.Thumbprint
 				NotAfter    = $certificate.NotAfter
 				Certificate = $certificate

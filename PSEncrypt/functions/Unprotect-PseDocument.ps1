@@ -102,14 +102,16 @@
 				return
 			}
 
-			$isFromSender = $senderCert.PublicKey.GetRSAPublicKey().VerifyData($bytesData, $bytesSignature, [System.Security.Cryptography.HashAlgorithmName]::SHA512, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
+			$senderPK = [System.Security.Cryptography.X509Certificates.RSACertificateExtensions]::GetRSAPublicKey($senderCert)
+			$isFromSender = $senderPK.VerifyData($bytesData, $bytesSignature, [System.Security.Cryptography.HashAlgorithmName]::SHA512, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
 			if (-not $isFromSender) {
 				$record = New-ErrorRecord -Message "Invalid signature! $($config.Name) could not be verified to come from $($senderCert.Subject) ($($senderCert.Thumbprint))!" -ErrorID 'InvalidSignature' -Category InvalidData -Target $config
 				$Cmdlet.WriteError($record)
 				return
 			}
 
-			try { $decryptedBytes = $recipientCert.PrivateKey.Decrypt($bytesData, [System.Security.Cryptography.RSAEncryptionPadding]::Pkcs1) }
+			$recipientPK = [System.Security.Cryptography.X509Certificates.RSACertificateExtensions]::GetRSAPrivateKey($recipientCert)
+			try { $decryptedBytes = $recipientPK.Decrypt($bytesData, [System.Security.Cryptography.RSAEncryptionPadding]::Pkcs1) }
 			catch {
 				$record = New-ErrorRecord -Message "Error decrypting data! $($config.Name) could not be decrypted wth $($recipientCert.Subject) ($($recipientCert.Thumbprint)): $_" -ErrorID 'InvalidCert' -Category InvalidData -Target $config
 				$Cmdlet.WriteError($record)

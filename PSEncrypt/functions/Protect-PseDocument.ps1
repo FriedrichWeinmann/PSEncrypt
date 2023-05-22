@@ -92,8 +92,11 @@
 			)
 
 			$bytes = [System.Text.Encoding]::UTF8.GetBytes($Content)
-			$bytesEncrypted = $Contact.Certificate.PublicKey.GetRSAPublicKey().Encrypt($bytes, [System.Security.Cryptography.RSAEncryptionPadding]::Pkcs1)
-			$bytesSignature = $OwnCertificate.PrivateKey.SIgnData($bytesEncrypted, [System.Security.Cryptography.HashAlgorithmName]::SHA512, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
+			$publicKey = [System.Security.Cryptography.X509Certificates.RSACertificateExtensions]::GetRSAPublicKey($Contact.Certificate)
+			$privateKey = [System.Security.Cryptography.X509Certificates.RSACertificateExtensions]::GetRSAPrivateKey($OwnCertificate)
+
+			$bytesEncrypted = $publicKey.Encrypt($bytes, [System.Security.Cryptography.RSAEncryptionPadding]::Pkcs1)
+			$bytesSignature = $privateKey.SignData($bytesEncrypted, [System.Security.Cryptography.HashAlgorithmName]::SHA512, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
 
 			@{
 				Name            = $Name
@@ -126,8 +129,11 @@
 			)
 
 			$bytes = [System.IO.File]::ReadAllBytes($Path)
-			$bytesEncrypted = $Contact.Certificate.PublicKey.GetRSAPublicKey().Encrypt($bytes, [System.Security.Cryptography.RSAEncryptionPadding]::Pkcs1)
-			$bytesSignature = $OwnCertificate.PrivateKey.SignData($bytesEncrypted, [System.Security.Cryptography.HashAlgorithmName]::SHA512, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
+			$publicKey = [System.Security.Cryptography.X509Certificates.RSACertificateExtensions]::GetRSAPublicKey($Contact.Certificate)
+			$privateKey = [System.Security.Cryptography.X509Certificates.RSACertificateExtensions]::GetRSAPrivateKey($OwnCertificate)
+
+			$bytesEncrypted = $publicKey.Encrypt($bytes, [System.Security.Cryptography.RSAEncryptionPadding]::Pkcs1)
+			$bytesSignature = $privateKey.SignData($bytesEncrypted, [System.Security.Cryptography.HashAlgorithmName]::SHA512, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
 
 			$fileName = Split-Path -Path $Path -Leaf
 			$data = @{

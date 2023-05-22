@@ -50,9 +50,9 @@
 
 	process {
 		$configuration = @{
-			CertThumbprint = ''
+			CertThumbprint   = ''
 			CertFriendlyName = ''
-			CertSubject = ''
+			CertSubject      = ''
 		}
 		if ($Thumbprint) { $configuration.CertThumbprint = $Thumbprint }
 		if ($FriendlyName) { $configuration.CertFriendlyName = $FriendlyName }
